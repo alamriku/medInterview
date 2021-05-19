@@ -20,3 +20,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::middleware('auth')->group(function () {
+    Route::resource('product-variant',\App\Http\Controllers\VariantController::class);
+    Route::post('product/images',[\App\Http\Controllers\ProductController::class,'storeImages']);
+    Route::post('product/removeImage',[\App\Http\Controllers\ProductController::class,'removeImage']);
+    Route::get('product/search',[\App\Http\Controllers\ProductController::class,'search'])->name('search');
+    Route::resource('product', \App\Http\Controllers\ProductController::class);
+});
